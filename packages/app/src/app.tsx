@@ -1,5 +1,8 @@
 import "@/index.css"
 import "@/olliecode-studio.css"
+import "@/olliecode-brand.css"
+import "@/olliecode-motion.css"
+import "@/olliecode-upgrade.css"
 import { OlliecodeToolbar } from "@/olliecode-toolbar"
 import { OlliecodeThemeProvider } from "@/olliecode-theme-provider"
 import { VoiceProvider } from "@/voice/context"
@@ -29,6 +32,7 @@ import { OlliecodeLicenseFab } from "@/olliecode-license-fab"
 import { OlliecodeUpdateFab } from "@/olliecode-update-fab"
 import { OlliecodeVersionBadge } from "@/olliecode-version-badge"
 import { OlliecodeThemeFab } from "@/olliecode-theme-fab"
+import { OlliecodeFxAmbient } from "@/olliecode-fx-ambient"
 import { FREE_EDITION } from "@/olliecode-edition"
 
 export { preloadRoute }
@@ -66,7 +70,7 @@ export function AppBaseProviders(
 ) {
   return (
     <MetaProvider>
-      <Title>olliEcode</Title>
+      <Title>AvciCode</Title>
       <Font />
       <ThemeProvider
         onThemeApplied={(mode, scheme) => {
@@ -112,6 +116,7 @@ export function AppInterface(props: {
       <GlobalProvider>
         <ProjectIconsProvider>
           <BodyTypography />
+          <OlliecodeFxAmbient />
           <CommandProvider>
             <DesktopCommands />
             <VoiceProvider>

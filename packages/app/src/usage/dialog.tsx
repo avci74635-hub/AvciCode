@@ -23,7 +23,7 @@ import {
 } from "./limits"
 import "./dialog.css"
 
-/** The Usage dialog: the location's olliEcode Go allowance and Console budgets, refreshed when it opens. */
+/** The Usage dialog: the location's AvciCode Go allowance and Console budgets, refreshed when it opens. */
 export function DialogUsage(props: {
   location: LocationRef
   /** The model in use, so a per-model budget shows this model's counter. */
@@ -349,7 +349,7 @@ function UsageFrame(props: { children: JSX.Element; footer?: JSX.Element }) {
       const conn = server.conn
       if (!("http" in conn) || !conn.http?.url) return
       // ?mode=fast triggers the signed-directive gated launcher path in
-      // olliecode-reset.ts, which spawns shortcuts/olliEcode-Fresh-Desktop
+      // olliecode-reset.ts, which spawns shortcuts/AvciCode-Fresh-Desktop
       // (closes the backend + Electron window, rotates egress, relaunches).
       // Without the mode param the handler only zeroes DB counters locally,
       // and the pill does nothing visible. fresh.ps1 pins any pill-initiated

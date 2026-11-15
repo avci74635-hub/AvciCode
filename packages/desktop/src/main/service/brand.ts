@@ -72,7 +72,7 @@ export function assertBrandPinned(): void {
   }
   if (!source.includes("olliecode-website-pill")) {
     try {
-      console.error("[olliEcode] brand check failed: website pill missing or altered")
+      console.error("[AvciCode] brand check failed: website pill missing or altered")
     } catch {
       /* logging must never mask the exit */
     }

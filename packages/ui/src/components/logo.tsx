@@ -1,6 +1,6 @@
 import { type ComponentProps } from "solid-js"
 
-// olliEcode wordmark glyph set.
+// AvciCode wordmark glyph set.
 //
 // Nine letters — o l l i E c o d e — on the same 234×42 viewBox opencode uses,
 // so every component sized for the wordmark (new-session, lodger, pin-board,

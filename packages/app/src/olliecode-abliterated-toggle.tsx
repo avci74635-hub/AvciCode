@@ -8,9 +8,9 @@ import { authTokenFromCredentials } from "@/runtime/server/api"
 import { useServers } from "@/runtime/server/registry"
 import { useLanguage } from "@/runtime/i18n/language"
 
-// olliEcode Auto JB toggle. When on, every model request carries the active
+// AvciCode Auto JB toggle. When on, every model request carries the active
 // Auto JB instruction set instead of the workspace AGENTS.md. The setting and
-// the user's custom instructions live next to the other olliEcode state in the
+// the user's custom instructions live next to the other AvciCode state in the
 // server data directory, so they survive restarts and are shared by the CLI
 // and the desktop.
 export function OlliecodeAbliteratedToggle() {

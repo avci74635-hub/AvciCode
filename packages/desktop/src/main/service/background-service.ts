@@ -89,7 +89,7 @@ const ensure = Effect.fn("BackgroundService.ensure")(function* (mode: Background
       // Pass the same state root so the child writes where this process probes.
       ...(setup.stateHome === undefined ? {} : { env: { XDG_STATE_HOME: setup.stateHome } }),
       // A fixed port makes a second contender fail to bind and back off; port 0 never collides, so two
-      // services could boot against the same database. local/dev (olliEcode) gets its own port and
+      // services could boot against the same database. local/dev (AvciCode) gets its own port and
       // state root so the upstream OpenCode desktop can run at the same time.
       command: [
         ...setup.cli.command,
@@ -133,7 +133,7 @@ const prepare = Effect.fn("BackgroundService.prepare")(function* (mode: Backgrou
   const path = yield* Path.Path
   const desktopCli = yield* DesktopCli.Service
   const isolated = !app.isPackaged && process.env.OPENCODE_DESKTOP_ISOLATED_SERVER === "1"
-  // local/dev is the olliEcode channel. The upstream OpenCode desktop uses latest/prod and the
+  // local/dev is the AvciCode channel. The upstream OpenCode desktop uses latest/prod and the
   // shared XDG state registration; without a dedicated state root and port the two apps replace
   // each other's background service every few seconds and both renderers time out.
   //

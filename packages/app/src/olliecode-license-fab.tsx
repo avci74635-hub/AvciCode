@@ -1,6 +1,6 @@
 import { createSignal, onCleanup, onMount, Show } from "solid-js"
 
-// olliEcode License pill. Pinned to the bottom-left alongside the Reset and
+// AvciCode License pill. Pinned to the bottom-left alongside the Reset and
 // example.com pills. Three states:
 //
 //   inactive  – shows "License" + lock icon, clicking opens the activation

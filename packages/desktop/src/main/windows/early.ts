@@ -72,7 +72,7 @@ const displays = {
   matching: (bounds: Electron.Rectangle) => screen.getDisplayMatching(bounds).bounds,
 }
 
-// olliEcode splash sentinel. The WPF splash (scripts/splash.ps1) previously
+// AvciCode splash sentinel. The WPF splash (scripts/splash.ps1) previously
 // polled `Get-Process -Name electron` for a window-title heuristic that drifted
 // every time the first-paint title changed, leaving the splash stuck on screen
 // until its 90s deadline. Writing a flag file the moment the first window shows
@@ -121,7 +121,7 @@ export function createEarlyWindow() {
     height: state.height,
     show: !deferReveal,
     autoHideMenuBar: true,
-    title: "olliEcode",
+    title: "AvciCode",
     icon: path.join(icons, `icon.${process.platform === "win32" ? "ico" : "png"}`),
     // The first window is adopted by the full window manager. Transparency
     // must be enabled here at construction; it cannot be added on adoption.

@@ -1,5 +1,5 @@
 import { licenseAppearance, licenseBackground, licenseThemeListener } from "./license-appearance"
-// olliEcode license gate for the desktop app.
+// AvciCode license gate for the desktop app.
 //
 // Runs once on app.whenReady(), before startSidecarProbe. If the local
 // license.json verifies, resolves and the desktop boots. Otherwise opens
@@ -227,12 +227,12 @@ function dialogHtml(): string {
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline';" />
-<title>olliEcode — License</title>
+<title>AvciCode — License</title>
 ${licenseAppearance(licenseThemeId())}
 </head>
 <body>
 <div class="card">
-  <div class="brand"><span class="brand-mark" aria-hidden="true">oE</span><span>olliEcode</span><span class="eyebrow">Workspace access</span></div>
+  <div class="brand"><span class="brand-mark" aria-hidden="true">oE</span><span>AvciCode</span><span class="eyebrow">Workspace access</span></div>
   <h1>Enter license key</h1>
   <p class="sub">One key per machine. Length depends on the key you were issued.</p>
   <label for="email">Email</label>
@@ -362,7 +362,7 @@ function showDialog(): Promise<boolean> {
       center: true,
       show: false,
       backgroundColor: licenseBackground(licenseThemeId()),
-      title: "olliEcode",
+      title: "AvciCode",
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
@@ -536,14 +536,14 @@ export async function ensureLicensedOrPrompt(_deps: GateDeps = {}): Promise<void
     LOG("[olliecode-license-gate] user cancelled, quitting")
     app.quit()
     await new Promise((r) => setTimeout(r, 50))
-    throw new Error("olliEcode license gate: user cancelled")
+    throw new Error("AvciCode license gate: user cancelled")
   }
   const after = await engine().status()
   LOG("[olliecode-license-gate] post-activate status:", after)
   if (!after.active) {
     app.quit()
     throw new Error(
-      `olliEcode license gate: still inactive after activate (${after.active === false ? after.reason ?? "unknown" : "unknown"})`,
+      `AvciCode license gate: still inactive after activate (${after.active === false ? after.reason ?? "unknown" : "unknown"})`,
     )
   }
   startLicenseHeartbeat()
@@ -619,12 +619,12 @@ function manageDialogHtml(): string {
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline';" />
-<title>olliEcode — License</title>
+<title>AvciCode — License</title>
 ${licenseAppearance(licenseThemeId())}
 </head>
 <body>
 <div class="card">
-  <div class="brand"><span class="brand-mark" aria-hidden="true">oE</span><span>olliEcode</span><span class="eyebrow">Workspace access</span></div>
+  <div class="brand"><span class="brand-mark" aria-hidden="true">oE</span><span>AvciCode</span><span class="eyebrow">Workspace access</span></div>
   <h1>License</h1>
   <p class="sub" id="sub">Loading…</p>
   <div id="body"></div>
@@ -736,7 +736,7 @@ export function openManagementDialog(): void {
     center: true,
     show: false,
     backgroundColor: licenseBackground(licenseThemeId()),
-    title: "olliEcode",
+    title: "AvciCode",
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -942,7 +942,7 @@ export function registerLicenseManagement(): void {
   // close) keeps working, with one extra Help entry for License and About.
   // autoHideMenuBar stays true, so the bar is invisible until Alt is tapped.
   // The accelerator below fires whether or not the bar is visible, as long as
-  // an olliEcode window has focus — i.e. never while the user is in another app.
+  // an AvciCode window has focus — i.e. never while the user is in another app.
   const licenseItem: Electron.MenuItemConstructorOptions = {
     label: "License…",
     accelerator: "CmdOrCtrl+Shift+L",
@@ -965,10 +965,10 @@ export function registerLicenseManagement(): void {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 
   // No globalShortcut.register. A system-wide accelerator that fires even
-  // when olliEcode is unfocused would hijack Ctrl+Shift+L in every other
+  // when AvciCode is unfocused would hijack Ctrl+Shift+L in every other
   // app on the box (VS Code "Select all occurrences", browser context,
   // etc.) which the operator explicitly called out as unwanted. The menu
-  // accelerator above only fires when an olliEcode window has focus, which
+  // accelerator above only fires when an AvciCode window has focus, which
   // is the right scope for a license-management entry buried in Help.
 
   LOG("[olliecode-license-gate] management registered (menu + ipc)")

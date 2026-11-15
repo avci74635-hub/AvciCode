@@ -42,7 +42,7 @@ function freshScriptHash(): string | undefined {
   return undefined
 }
 
-// olliEcode: side-channel route the Reset button calls.
+// AvciCode: side-channel route the Reset button calls.
 //
 // Shallow (default): zeroes aggregate token / cost columns on every session_v2
 // row and purges the three usage event types. Local-only â€” Console budgets are
@@ -53,7 +53,7 @@ function freshScriptHash(): string | undefined {
 // kv. opencode.ai never sees local DB rows â€” the deep wipe only matters because
 // it clears cached workspace / project IDs the client sends in headers.
 //
-// Fresh (?mode=fresh): the full ritual. Spawns `shortcuts/olliEcode-Fresh-
+// Fresh (?mode=fresh): the full ritual. Spawns `shortcuts/AvciCode-Fresh-
 // Desktop.bat` as a detached child, returns 200 immediately. The script closes
 // this backend + the Electron window, deep-wipes the DB + Local Storage,
 // rotates the Tor exit, and launches a fresh desktop. One click = fresh daily
@@ -95,7 +95,7 @@ const preflight = Effect.gen(function* () {
 
 export const OlliecodeResetLayer = HttpRouter.use((router) =>
   Effect.gen(function* () {
-    // olliEcode: snapshot the live SQLite database to a self-contained .db
+    // AvciCode: snapshot the live SQLite database to a self-contained .db
     // file under <data-dir>/session-backups/<timestamp>.db. One VACUUM INTO
     // call writes a complete copy (every table, every blob, every row) with
     // no WAL dependency, so the file can be opened offline or swapped back
@@ -291,7 +291,7 @@ export const OlliecodeResetLayer = HttpRouter.use((router) =>
         }
         const service = serviceResult.success
 
-        // olliEcode launcher modes. Historically two paths:
+        // AvciCode launcher modes. Historically two paths:
         //
         //   fast  = egress rotation only. Session/drafts/window layout kept.
         //   fresh = full ritual. Deep DB wipe + Electron profile scrub +
@@ -326,7 +326,7 @@ export const OlliecodeResetLayer = HttpRouter.use((router) =>
           // missing, leaving the app open on an empty DB and the reset
           // half-applied.
           const resolveFreshLauncher = (): string | null => {
-            const names = ["olliEcode-Fresh-Desktop.vbs", "olliEcode-Fresh.bat"]
+            const names = ["AvciCode-Fresh-Desktop.vbs", "AvciCode-Fresh.bat"]
             let dir = path.resolve(path.dirname(process.execPath))
             for (let i = 0; i < 6; i++) {
               for (const n of names) {
@@ -348,7 +348,7 @@ export const OlliecodeResetLayer = HttpRouter.use((router) =>
             return HttpServerResponse.jsonUnsafe({
               ok: false,
               mode: "fresh",
-              error: "could not locate olliEcode-Fresh-Desktop.vbs launcher",
+              error: "could not locate AvciCode-Fresh-Desktop.vbs launcher",
             }, { status: 500 })
           }
           // License/directive gate ran above for every mode.
@@ -371,7 +371,7 @@ export const OlliecodeResetLayer = HttpRouter.use((router) =>
           //   1. Rotate the fingerprint nonce locally (still cheap, still
           //      helps the ua-spoof plugin on the FIRST request of the next
           //      sidecar run).
-          //   2. Spawn shortcuts/olliEcode-Fresh-Desktop.vbs as a detached
+          //   2. Spawn shortcuts/AvciCode-Fresh-Desktop.vbs as a detached
           //      process. That VBS runs scripts/fresh.ps1 which:
           //        - taskkills electron.exe + opencode-cli.exe (closes app)
           //        - runs the full deep-wipe DB flow (ALL tables, including
@@ -555,7 +555,7 @@ export const OlliecodeResetLayer = HttpRouter.use((router) =>
             ok: true,
             mode: "fresh",
             // The actual rotation is done by fresh.ps1, and its outcome is
-            // written to %LOCALAPPDATA%\olliEcode\.fresh.log. Do not claim
+            // written to %LOCALAPPDATA%\AvciCode\.fresh.log. Do not claim
             // "rotated" here: we have not rotated anything yet.
             warp: {
               status: "skipped",

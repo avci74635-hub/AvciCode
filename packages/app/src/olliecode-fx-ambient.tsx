@@ -1,21 +1,16 @@
 import { createSignal, ErrorBoundary, onCleanup, onMount, Show } from "solid-js"
 import { Portal } from "solid-js/web"
 
-// olliEcode ambient background layer for animated themes. Rendered into
-// <body> via a Portal so it can never affect the stacking / layout /
-// clipping of vendor panels (file explorer, chat pane, dialogs). Behind
-// everything with z-index: 0 + isolation: isolate — children can't
-// escape this stacking context, siblings never see them.
+// AvciCode ambient background layer. Rendered into <body> via a Portal so it
+// can never affect the stacking / layout / clipping of vendor panels. Behind
+// everything with z-index: -1 and pointer-events: none.
 //
-// Only runs when the picked theme is in the animated set. Static themes
-// render nothing (no DOM, no listeners, no cost). Switching themes is a
-// Solid signal update + <Show> remount; no full reload needed.
+// The generic motion set (orbs, beam, grid) runs on every theme. The named
+// kits add their own ornament on top. Static themes still get the base layer,
+// because the base layer is what makes the app feel alive.
 //
-// If any decoration throws during paint (rare but possible on exotic
-// drivers / GPU memory pressure), the ErrorBoundary catches it and
-// renders nothing — the app keeps working, the theme just loses its
-// atmospheric layer. Better than a runtime that takes down the whole
-// window.
+// If any decoration throws during paint, the ErrorBoundary catches it and
+// renders nothing — the app keeps working.
 
 function readTheme(): string {
   if (typeof document === "undefined") return ""
@@ -41,11 +36,18 @@ export function OlliecodeFxAmbient() {
   return (
     <ErrorBoundary fallback={<></>}>
       <Portal mount={document.body}>
-        <div
-          class="olliE-ambient pointer-events-none fixed inset-0 overflow-hidden"
-          style={{ "z-index": "0", isolation: "isolate" }}
-          aria-hidden="true"
-        >
+        <div class="olliE-ambient pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
+          {/* Always-on motion layer. */}
+          <div class="ac-orbs">
+            <i />
+            <i />
+            <i />
+            <i />
+          </div>
+          <div class="ac-beam" />
+          <div class="ac-grid" />
+
+          {/* Named-kit ornaments. */}
           <Show when={kit() === "frost"}>
             <div class="olliE-orb olliE-orb-a" />
             <div class="olliE-orb olliE-orb-b" />

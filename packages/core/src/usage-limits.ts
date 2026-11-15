@@ -17,7 +17,7 @@ export interface Interface {
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/UsageLimits") {}
 
-// olliEcode overlay. Two modes:
+// AvciCode overlay. Two modes:
 //
 //   OLLIECODE_SPOOF_UNLIMITED=0 (default) → get() returns undefined. The TUI
 //     hides the badge entirely, no HTTP round-trip to opencode.ai Console.
@@ -39,7 +39,7 @@ const CENTURY_MS = 100 * 365.25 * 24 * 60 * 60 * 1000
 const spoofed = (): Info => ({
   workspace: {
     id: "olliecode-local",
-    name: "olliEcode (local, unlimited)",
+    name: "AvciCode (local, unlimited)",
     usageURL: "https://discord.gg/example",
   },
   budgets: [],

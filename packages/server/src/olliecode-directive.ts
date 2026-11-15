@@ -1,4 +1,4 @@
-// olliEcode server-authoritative reset: directive client.
+// AvciCode server-authoritative reset: directive client.
 //
 // Lives in @opencode/server because the Usage reset handler calls it from
 // the sidecar. The pubkey is the SAME one the CLI's licensing engine

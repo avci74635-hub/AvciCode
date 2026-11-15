@@ -28,7 +28,7 @@ function diag(line: string): void {
   } catch { /* ignore */ }
 }
 
-// olliEcode outbound-identity rewriter for opencode.ai.
+// AvciCode outbound-identity rewriter for opencode.ai.
 //
 // Every outbound request heading at opencode.ai gets its session / project /
 // client / UA headers rewritten to values the server has never seen before,

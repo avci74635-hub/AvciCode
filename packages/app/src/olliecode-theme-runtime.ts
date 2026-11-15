@@ -1,4 +1,5 @@
 import { DEFAULT_THEME, KITS, palette, STORAGE_KEY, themeKit } from "./olliecode-themes"
+import { ANIMATED_THEMES } from "./olliecode-effects"
 type ThemeBridge = { themeGet?: () => Promise<string | null>; themeSet?: (id: string) => Promise<{ ok: boolean }> }
 function bridge() {
   return (window as unknown as { electron?: { olliecode?: ThemeBridge } }).electron?.olliecode
@@ -17,9 +18,13 @@ export function applyTheme(id: string, persist = true) {
   const kit = themeKit(id)
   const root = document.documentElement
   root.dataset.ollieTheme = kit.id
+  root.dataset.theme = kit.id
   root.dataset.ollieAppearance = kit.family
   root.style.colorScheme = kit.family
   root.removeAttribute("data-fx")
+  root.removeAttribute("data-user-theme")
+  if (ANIMATED_THEMES.includes(kit.id)) root.setAttribute("data-fx", kit.id)
+  if (kit.id === "clear") root.setAttribute("data-user-theme", "clear")
   Object.entries(palette(kit)).forEach(([key, value]) => root.style.setProperty(`--kit-${key}`, value))
   if (persist) {
     try {

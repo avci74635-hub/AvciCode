@@ -18,8 +18,8 @@ export function OlliecodeToolbar(props: ParentProps) {
   return (
     <footer ref={element} class="oc-toolbar" aria-label={language.t("user.toolbar.label")}>
       <div class="oc-toolbar-brand">
-        <b aria-hidden="true">oE</b>
-        <span>olliEcode</span>
+        <b aria-hidden="true">AC</b>
+        <span>AvciCode</span>
       </div>
       {props.children}
     </footer>

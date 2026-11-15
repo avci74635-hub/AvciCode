@@ -1,4 +1,4 @@
-// olliEcode update-available pill. Hidden by default; shows the moment the
+// AvciCode update-available pill. Hidden by default; shows the moment the
 // main process's updater finishes downloading + verifying a new installer,
 // via the `olliecode:update-ready` event the preload bridge relays. Click
 // prompts for confirmation, then asks main to spawn the installer and quit.
@@ -102,7 +102,7 @@ export function OlliecodeUpdateFab() {
       // new". The whole point of the scrub is that nothing about the
       // update's contents reaches the user.
       // eslint-disable-next-line no-alert
-      ok = confirm(`Install version ${v}?\n\nolliEcode will close and reopen.`)
+      ok = confirm(`Install version ${v}?\n\nAvciCode will close and reopen.`)
     }
     if (!ok) return
 

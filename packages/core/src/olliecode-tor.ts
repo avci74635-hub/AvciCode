@@ -6,7 +6,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync, statSync } from "no
 import { homedir } from "node:os"
 import { dirname as pathDirname, join as pathJoin, resolve as pathResolve } from "node:path"
 
-// olliEcode portable Tor manager.
+// AvciCode portable Tor manager.
 //
 // Bundled tor.exe + geoip ship under {install}\deps\tor\. On first reset click,
 // ensureTor() writes a torrc, launches tor as a background child, and waits

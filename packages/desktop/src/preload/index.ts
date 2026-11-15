@@ -23,7 +23,7 @@ const snapshot: Promise<WindowSnapshot> = ipcRenderer
   .invoke(WindowSnapshotChannel, storageSnapshotNames(bootstrap.id))
   .catch(() => ({ storage: {} }))
 
-// olliEcode narrow IPC surface for the license pill + the updater toast.
+// AvciCode narrow IPC surface for the license pill + the updater toast.
 // Each method is an explicit named function; no generic `invoke(channel,
 // ...)` pass-through. The renderer must not be able to call arbitrary
 // ipcMain channels from a hostile page.

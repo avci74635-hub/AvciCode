@@ -1,13 +1,13 @@
 import { createUniqueId, type ComponentProps } from "solid-js"
 
-// olliEcode splash + hero wordmark.
+// AvciCode splash + hero wordmark.
 //
 // Nine letters — o l l i E c o d e — on the same 234×42 viewBox the small
 // Logo uses (overlay/packages/ui/src/components/logo.tsx). Downstream the
 // splash renders this with `w-4/5` + `h-auto`, so the aspect ratio of the
 // viewBox is all that matters — the browser scales it to whatever pixel size
 // the layout allocates. The parent used to pass a 720×129 opencode glyph set
-// here; swapping that for the olliEcode geometry replaces the loading-screen
+// here; swapping that for the AvciCode geometry replaces the loading-screen
 // wordmark without touching the splash layout code.
 //
 // Letter grid (6px pixel grid, variable widths with 6px gaps):

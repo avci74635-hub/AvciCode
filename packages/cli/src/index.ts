@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-// olliEcode: MUST be the very first import so our globalThis.fetch override
+// AvciCode: MUST be the very first import so our globalThis.fetch override
 // runs before any effect/http FetchHttpClient layer captures a reference.
 // Lives in @opencode/util (which the CLI already depends on) and is
 // self-contained (no @opencode/core import) so the bundle resolves clean.

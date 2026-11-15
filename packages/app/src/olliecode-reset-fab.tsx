@@ -12,7 +12,7 @@ function licenseStatus() {
   return electron?.olliecode?.licenseStatus
 }
 
-// olliEcode website pill. Rendered to the right of the Usage reset pill at
+// AvciCode website pill. Rendered to the right of the Usage reset pill at
 // the bottom-left corner of the renderer. Shelling to the OS browser via
 // an anchor with target="_blank" routes through Electron's main-process
 // `handleWillNavigate → shell.openExternal`, so the link opens in the user's
@@ -58,7 +58,7 @@ export function OlliecodeWebsiteFab() {
   )
 }
 
-// olliEcode Fresh pill. Pinned to the bottom-left corner so it clears the
+// AvciCode Fresh pill. Pinned to the bottom-left corner so it clears the
 // Windows window chrome (min / max / close at top-right) and the composer
 // (bottom-right).
 //
@@ -70,10 +70,10 @@ export function OlliecodeWebsiteFab() {
 // The deep ritual (wipe DB + Electron Local Storage + drafts + window state)
 // used to be bound to shift+click here, but it was indistinguishable from a
 // stuck modifier and the resulting first-launch onboarding looked like the
-// pill was broken. It now lives only on the Start Menu's `olliEcode-Fresh-
+// pill was broken. It now lives only on the Start Menu's `AvciCode-Fresh-
 // Desktop` shortcut, which is explicit about what it does.
 //
-// The backend handler shells out to shortcuts/olliEcode-Fresh-Desktop.bat
+// The backend handler shells out to shortcuts/AvciCode-Fresh-Desktop.bat
 // with OLLIECODE_FRESH_MODE=fast in the env; this window goes down ~500 ms
 // later as part of that script, so the pill shows a short "Resetting…"
 // state before the window dies and the new one takes its place.
@@ -116,7 +116,7 @@ export function OlliecodeResetFab() {
     // shift-hold, and the first-launch onboarding running on relaunch
     // looked identical to "the pill is broken". If someone genuinely needs
     // the full deep wipe (DB rows + Electron profile + credentials), the
-    // Start Menu's `olliEcode-Fresh-Desktop` shortcut runs the ps1 directly
+    // Start Menu's `AvciCode-Fresh-Desktop` shortcut runs the ps1 directly
     // with -SkipReset:$false and no mode override — same ritual, but off
     // the pill where misclicks can't hit it.
     set({ running: true, done: false, failed: false, count: 0, errorMsg: "", phase: "reset" })

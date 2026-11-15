@@ -1,4 +1,4 @@
-// olliEcode FX runtime — cursor / spotlight / ripple / magnetic / trail layer
+// AvciCode FX runtime — cursor / spotlight / ripple / magnetic / trail layer
 // for the animated themes. One singleton instance; toggled on/off when the
 // theme picker switches between an animated kit and a static one.
 //

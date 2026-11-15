@@ -1,4 +1,4 @@
-// olliEcode: locate the bundled opencode-cli[.exe] on disk.
+// AvciCode: locate the bundled opencode-cli[.exe] on disk.
 //
 // Lives in its own module because the license gate no longer needs it
 // (the licensing engine moved into Electron main), but desktop-cli.ts
@@ -18,7 +18,7 @@ export function resolveCliBinary(): string {
   const appPath = app.getAppPath()
   console.log("[olliecode-cli-binary] app.getAppPath():", appPath)
 
-  // olliEcode installer layout: Inno Setup launches Electron with the
+  // AvciCode installer layout: Inno Setup launches Electron with the
   // desktop-pkg folder as its app path, and the CLI lives inside
   // <app-path>/resources/<name>. Check this BEFORE process.resourcesPath,
   // because a non-packaged Electron (direct electron.exe) sets

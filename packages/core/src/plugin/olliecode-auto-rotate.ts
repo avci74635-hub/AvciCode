@@ -9,7 +9,7 @@ import { randomBytes } from "node:crypto"
 import { homedir } from "node:os"
 import { dirname as pathDirname, join as pathJoin } from "node:path"
 
-// olliEcode auto-rotate on opencode.ai quota refusal.
+// AvciCode auto-rotate on opencode.ai quota refusal.
 //
 // On a 429 or 403 from opencode.ai whose body carries a known quota-error
 // signature (FreeUsageLimit, BudgetLimit, GoUsageLimit, "usage limit",

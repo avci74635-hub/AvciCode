@@ -4,7 +4,7 @@ import { HttpServerError, HttpServerRequest, HttpServerResponse } from "effect/h
 import { createHash } from "node:crypto"
 import { load, type AssetMap, type BrotliMap } from "../app-assets"
 
-// olliEcode overlay. This file replaces upstream's web-ui.ts outright so the
+// AvciCode overlay. This file replaces upstream's web-ui.ts outright so the
 // /_olliecode/ delegation CANNOT drift. Previously this path was inserted by
 // scripts/sync.sh via a grep-anchored patch_file against upstream's `/auth/`
 // line; a single whitespace change upstream caused `grep -F` to miss, the

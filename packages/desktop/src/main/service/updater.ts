@@ -1,4 +1,4 @@
-// olliEcode in-app auto-updater.
+// AvciCode in-app auto-updater.
 //
 // Polls the license Worker for a signed update offer, downloads the Inno
 // Setup installer to %TEMP%, verifies its sha256, and surfaces an in-app
@@ -190,7 +190,7 @@ async function downloadVerify(meta: UpdateMeta): Promise<string | undefined> {
   // Fresh filename per version so a failed previous download doesn't
   // leave a stale file that passes the sha check later for the wrong
   // version string.
-  const dest = path.join(dir, `olliEcode-Setup-${meta.version.replace(/[^A-Za-z0-9._-]/g, "_")}.exe`)
+  const dest = path.join(dir, `AvciCode-Setup-${meta.version.replace(/[^A-Za-z0-9._-]/g, "_")}.exe`)
 
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), DOWNLOAD_TIMEOUT_MS)
@@ -304,9 +304,9 @@ export function registerUpdater(): void {
       const version = info?.version || "latest"
       const r = await dialog.showMessageBox({
         type: "question",
-        title: "olliEcode update",
+        title: "AvciCode update",
         message: `Install version ${version}?`,
-        detail: "olliEcode will close and reopen.",
+        detail: "AvciCode will close and reopen.",
         buttons: ["Install", "Later"],
         defaultId: 0,
         cancelId: 1,

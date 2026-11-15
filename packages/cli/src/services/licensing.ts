@@ -8,7 +8,7 @@ import { Context, Effect, Layer } from "effect"
 import { Global } from "@opencode/util/global"
 import { checkAntiDebug } from "./anti-debug"
 
-// olliEcode licensing. Online activation binds a key to a stable per-machine
+// AvciCode licensing. Online activation binds a key to a stable per-machine
 // pair of anchors; the server returns an Ed25519-signed token this process
 // verifies on every launch with a baked public key. The private key never
 // leaves the Worker, so lifting the embedded constant from a dumped binary
@@ -58,7 +58,7 @@ export interface Cached {
   readonly hwid: string
   readonly tier: string
   readonly expires_at: number
-  // olliEcode email-at-activate (optional). Kept in the cache so a license
+  // AvciCode email-at-activate (optional). Kept in the cache so a license
   // reinstall on the same box re-presents the same email to the Worker and
   // doesn't trip the mismatch check. Backward-compatible with pre-email
   // keys where this field is undefined.
@@ -512,7 +512,7 @@ export const ensureLicensed = Effect.gen(function* () {
   const cached = svc.load()
   if (!cached) {
     throw new LicenseError(
-      "olliEcode is not activated on this machine. Run: olliecode license activate <KEY>  (buy at https://example.com/buy)",
+      "AvciCode is not activated on this machine. Run: olliecode license activate <KEY>  (buy at https://example.com/buy)",
     )
   }
   const hwid = svc.hwid()

@@ -31,7 +31,7 @@ const TRANSPARENT_BACKGROUND = "#00000000"
 
 export function windowAppearance(path: Path.Path, paths: DesktopPaths.Resolved) {
   return {
-    title: "olliEcode",
+    title: "AvciCode",
     icon: iconPath(path, paths),
     // The Clear theme reveals the desktop through #root, which requires a
     // per-pixel transparent window. Opaque kits paint their base colour over

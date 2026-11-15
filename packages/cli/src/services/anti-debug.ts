@@ -1,4 +1,4 @@
-// olliEcode anti-debug surface. Called from ensureLicensed + verifyToken on
+// AvciCode anti-debug surface. Called from ensureLicensed + verifyToken on
 // every launch. Cheap checks only -- none allocate memory or spawn processes
 // on the hot path, so startup cost stays under 2 ms.
 //

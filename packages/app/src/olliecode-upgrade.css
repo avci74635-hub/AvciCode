@@ -1,0 +1,557 @@
+/* AvciCode interface upgrade layer.
+ *
+ * Loaded last so it wins over the vendor + studio styles. Everything here is
+ * pure presentation driven by the runtime-set --kit-* tokens, so it follows
+ * every theme automatically:
+ *   - a live aurora mesh behind the whole window (body::before)
+ *   - glassmorphism on the sidebar, chat panel, composer and dialogs
+ *   - accent glows, refined radii, soft depth
+ *   - themed scrollbars and selection
+ *
+ * No element transforms, no pointer hit-testing, no layout reflow: only paint.
+ * Reduced-motion users get the same surfaces with the animation frozen.
+ */
+
+:root {
+  --oc-upgrade-glow: color-mix(in srgb, var(--kit-accent) 42%, transparent);
+  --oc-upgrade-glow-soft: color-mix(in srgb, var(--kit-accent) 16%, transparent);
+  --oc-upgrade-glass: color-mix(in srgb, var(--kit-bg-base) 62%, transparent);
+  --oc-upgrade-glass-strong: color-mix(in srgb, var(--kit-bg-base) 78%, transparent);
+  --oc-upgrade-hair: color-mix(in srgb, var(--kit-accent) 22%, transparent);
+  --oc-upgrade-radius: 18px;
+}
+
+/* ---- Live background mesh ------------------------------------------------ */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(42% 42% at 18% 22%, color-mix(in srgb, var(--kit-accent) 26%, transparent), transparent 70%),
+    radial-gradient(38% 38% at 82% 18%, color-mix(in srgb, var(--kit-success) 18%, transparent), transparent 70%),
+    radial-gradient(46% 46% at 72% 82%, color-mix(in srgb, var(--kit-accent) 22%, transparent), transparent 72%),
+    radial-gradient(40% 40% at 28% 88%, color-mix(in srgb, var(--kit-warn) 14%, transparent), transparent 70%);
+  filter: blur(28px) saturate(125%);
+  opacity: 0.9;
+  animation: oc-upgrade-drift 34s ease-in-out infinite alternate;
+}
+
+@keyframes oc-upgrade-drift {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1.02) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(2%, 2%, 0) scale(1.08) rotate(2deg);
+  }
+  100% {
+    transform: translate3d(-1%, 3%, 0) scale(1.04) rotate(-2deg);
+  }
+}
+
+/* Keep the base surface honest: the mesh shows through where the app is
+ * translucent, and the theme colour fills the rest. */
+html,
+body {
+  background-color: var(--kit-bg-base);
+  background-attachment: fixed;
+}
+
+/* ---- Glassmorphism ------------------------------------------------------- */
+
+[data-slot="vertical-tabs-sidebar"] {
+  background: var(--oc-upgrade-glass) !important;
+  border-inline-end: 1px solid var(--oc-upgrade-hair) !important;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+[data-slot="session-chat-panel"],
+[data-slot="session-location-bar"] {
+  background: color-mix(in srgb, var(--kit-bg-base) 52%, transparent) !important;
+  backdrop-filter: blur(16px) saturate(135%);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+}
+
+[data-slot="session-location-bar"] {
+  border-bottom: 1px solid var(--oc-upgrade-hair) !important;
+}
+
+[data-component="composer"] {
+  background: var(--oc-upgrade-glass-strong) !important;
+  border: 1px solid var(--oc-upgrade-hair) !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #ffffff 6%, transparent) inset,
+    0 18px 50px color-mix(in srgb, var(--kit-bg-base) 55%, #000 20%) !important;
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  transition:
+    border-color 180ms ease,
+    box-shadow 220ms ease;
+}
+
+[data-component="composer"]:focus-within {
+  border-color: color-mix(in srgb, var(--kit-accent) 70%, transparent) !important;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--kit-accent) 55%, transparent),
+    0 0 24px var(--oc-upgrade-glow-soft),
+    0 22px 60px color-mix(in srgb, var(--kit-bg-base) 60%, #000 25%) !important;
+}
+
+[data-component="dialog-content"],
+dialog,
+[role="dialog"] {
+  border: 1px solid var(--oc-upgrade-hair) !important;
+  border-radius: var(--oc-upgrade-radius) !important;
+  background: var(--oc-upgrade-glass-strong) !important;
+  backdrop-filter: blur(26px) saturate(150%);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #ffffff 8%, transparent) inset,
+    0 40px 90px rgb(0 0 0 / 0.42);
+}
+
+::backdrop {
+  background: color-mix(in srgb, var(--kit-bg-base) 45%, rgb(0 0 0 / 0.55)) !important;
+  backdrop-filter: blur(3px);
+}
+
+/* ---- Chrome: toolbar, pills, buttons ------------------------------------ */
+
+.oc-toolbar {
+  background: color-mix(in srgb, var(--kit-bg-subtle) 72%, transparent) !important;
+  border-top: 1px solid var(--oc-upgrade-hair) !important;
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+.oc-toolbar-brand b {
+  background: linear-gradient(140deg, var(--oc-upgrade-glow), transparent 70%);
+  box-shadow: 0 0 14px var(--oc-upgrade-glow-soft);
+}
+
+[data-component="button"],
+[data-component="icon-button"] {
+  border-radius: 12px;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease,
+    box-shadow 160ms ease;
+}
+
+[data-slot="tabs-trigger"][data-selected],
+[data-slot="segmented-control-v2-item"][data-selected] {
+  color: var(--kit-text-base);
+  box-shadow: 0 0 0 1px var(--oc-upgrade-hair) inset, 0 4px 16px color-mix(in srgb, var(--kit-bg-base) 45%, #000 15%);
+}
+
+/* ---- Depth + polish ----------------------------------------------------- */
+
+[data-slot="user-message-body"] {
+  border: 1px solid var(--oc-upgrade-hair);
+  box-shadow: 0 6px 22px color-mix(in srgb, var(--kit-bg-base) 40%, #000 12%);
+}
+
+[data-component="markdown"] pre {
+  border-radius: 14px;
+  border: 1px solid var(--oc-upgrade-hair);
+  box-shadow: 0 8px 26px color-mix(in srgb, var(--kit-bg-base) 45%, #000 12%);
+}
+
+/* Themed scrollbars (webkit + firefox) */
+* {
+  scrollbar-color: color-mix(in srgb, var(--kit-accent) 40%, transparent) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--oc-upgrade-hair), color-mix(in srgb, var(--kit-accent) 45%, transparent));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--kit-accent) 62%, transparent);
+  background-clip: content-box;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--kit-accent) 40%, transparent);
+  color: var(--kit-text-base);
+}
+
+/* Light themes want a softer mesh so text contrast stays high. */
+:root[data-theme="paper"] body::before,
+:root[data-theme="sakura"] body::before,
+:root[data-theme="porcelain"] body::before,
+:root[data-theme="linen"] body::before,
+:root[data-theme="cloud"] body::before,
+:root[data-theme="mint"] body::before,
+:root[data-theme="lavender"] body::before,
+:root[data-theme="sand"] body::before {
+  opacity: 0.55;
+}
+
+/* Frozen animation, same glass, for users who ask for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
+}
+
+/* Touch / coarse pointers: skip the backdrop blur cost on phones. */
+@media (hover: none) and (pointer: coarse) {
+  [data-slot="vertical-tabs-sidebar"],
+  [data-slot="session-chat-panel"],
+  [data-slot="session-location-bar"],
+  [data-component="composer"],
+  [data-component="dialog-content"],
+  .oc-toolbar {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* ======================================================================
+ * AvciCode motion layer — richer background, floating orbs, light sweep,
+ * animated grid, glowing composer, live buttons and message entrances.
+ * Pure CSS paint; no JS, no hit-testing, no layout reflow.
+ * ====================================================================== */
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: -30%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--kit-accent) 30%, transparent) 0 1.2px, transparent 1.6px),
+    radial-gradient(circle at 70% 60%, color-mix(in srgb, var(--kit-success) 26%, transparent) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 45% 80%, color-mix(in srgb, var(--kit-warn) 24%, transparent) 0 1.4px, transparent 1.8px),
+    conic-gradient(from 180deg at 50% 50%, transparent 0deg, color-mix(in srgb, var(--kit-accent) 10%, transparent) 60deg, transparent 120deg, color-mix(in srgb, var(--kit-success) 8%, transparent) 220deg, transparent 300deg);
+  background-size: 220px 220px, 280px 280px, 340px 340px, 100% 100%;
+  opacity: 0.55;
+  filter: blur(0.2px);
+  animation: ac-particles 46s linear infinite;
+  mask-image: radial-gradient(circle at 50% 42%, #000 0%, #000 55%, transparent 82%);
+  -webkit-mask-image: radial-gradient(circle at 50% 42%, #000 0%, #000 55%, transparent 82%);
+}
+
+@keyframes ac-particles {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(-3%, 2%, 0) rotate(1.5deg); }
+  100% { transform: translate3d(2%, -2%, 0) rotate(-1deg); }
+}
+
+/* Sweeping light beam across the whole window. */
+body > .ac-beam,
+body .ac-beam {
+  position: fixed;
+  inset: -40% -10%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    color-mix(in srgb, var(--kit-accent) 12%, transparent) 48%,
+    color-mix(in srgb, #ffffff 10%, transparent) 50%,
+    color-mix(in srgb, var(--kit-accent) 12%, transparent) 52%,
+    transparent 62%
+  );
+  filter: blur(18px);
+  opacity: 0.5;
+  animation: ac-beam 11s ease-in-out infinite;
+}
+
+@keyframes ac-beam {
+  0% { transform: translateX(-40%) rotate(4deg); opacity: 0; }
+  15% { opacity: 0.55; }
+  50% { transform: translateX(35%) rotate(-2deg); opacity: 0.45; }
+  85% { opacity: 0.2; }
+  100% { transform: translateX(60%) rotate(3deg); opacity: 0; }
+}
+
+/* Floating orbs that keep the background alive on every theme. */
+.ac-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+}
+.ac-orbs i {
+  position: absolute;
+  display: block;
+  border-radius: 999px;
+  filter: blur(34px);
+  opacity: 0.5;
+  will-change: transform;
+  animation: ac-float 22s ease-in-out infinite;
+}
+.ac-orbs i:nth-child(1) { width: 320px; height: 320px; left: 8%; top: 12%; background: color-mix(in srgb, var(--kit-accent) 55%, transparent); animation-duration: 26s; }
+.ac-orbs i:nth-child(2) { width: 260px; height: 260px; right: 10%; top: 18%; background: color-mix(in srgb, var(--kit-success) 45%, transparent); animation-duration: 31s; animation-delay: -6s; }
+.ac-orbs i:nth-child(3) { width: 380px; height: 380px; left: 38%; bottom: 6%; background: color-mix(in srgb, var(--kit-warn) 32%, transparent); animation-duration: 36s; animation-delay: -12s; }
+.ac-orbs i:nth-child(4) { width: 200px; height: 200px; right: 26%; bottom: 22%; background: color-mix(in srgb, var(--kit-accent) 42%, transparent); animation-duration: 28s; animation-delay: -3s; }
+
+@keyframes ac-float {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(28px, -34px, 0) scale(1.08); }
+  66% { transform: translate3d(-24px, 22px, 0) scale(0.94); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Animated grid overlay, very subtle. */
+.ac-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--kit-accent) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--kit-accent) 7%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.35;
+  mask-image: radial-gradient(circle at 50% 40%, #000 10%, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, #000 10%, transparent 72%);
+  animation: ac-grid 18s linear infinite;
+}
+
+@keyframes ac-grid {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 44px 44px, 44px 44px; }
+}
+
+/* Glowing composer shell. */
+form[data-component="composer"] {
+  position: relative;
+  box-shadow:
+    0 0 0 1px var(--oc-upgrade-hair),
+    0 18px 60px -30px var(--oc-upgrade-glow),
+    inset 0 1px 0 color-mix(in srgb, #ffffff 6%, transparent);
+  transition: box-shadow 240ms ease, border-color 240ms ease;
+  animation: ac-breathe 7s ease-in-out infinite;
+}
+form[data-component="composer"]:focus-within {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--kit-accent) 46%, transparent),
+    0 22px 70px -24px var(--oc-upgrade-glow),
+    0 0 42px -8px var(--oc-upgrade-glow);
+}
+
+@keyframes ac-breathe {
+  0%, 100% { box-shadow: 0 0 0 1px var(--oc-upgrade-hair), 0 18px 60px -30px var(--oc-upgrade-glow), inset 0 1px 0 color-mix(in srgb, #ffffff 6%, transparent); }
+  50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--kit-accent) 30%, transparent), 0 24px 74px -26px var(--oc-upgrade-glow), inset 0 1px 0 color-mix(in srgb, #ffffff 9%, transparent); }
+}
+
+/* Buttons lift and glow on hover; not on touch. */
+@media (hover: hover) and (pointer: fine) {
+  button:not(:disabled), [role="button"]:not([aria-disabled="true"]) {
+    transition: transform 160ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 160ms ease, background-color 160ms ease;
+  }
+  button:not(:disabled):hover, [role="button"]:not([aria-disabled="true"]):hover {
+    transform: translateY(-1px);
+  }
+  button:not(:disabled):active, [role="button"]:not([aria-disabled="true"]):active {
+    transform: translateY(0) scale(0.985);
+  }
+}
+
+/* Brand shimmer in the footer toolbar. */
+.oc-toolbar-brand b {
+  background: linear-gradient(100deg, var(--kit-accent), #ffffff 40%, var(--kit-success) 70%, var(--kit-accent));
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ac-shimmer 6s linear infinite;
+}
+@keyframes ac-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 220% 50%; }
+}
+
+/* Message entrance. */
+[data-slot="message"], [data-component="message"], .message-row {
+  animation: ac-rise 320ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes ac-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Attachment chips pulse softly while uploading. */
+[data-slot="attachment"], [data-component="attachment"] {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+[data-slot="attachment"]:hover, [data-component="attachment"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px -14px var(--oc-upgrade-glow);
+}
+
+/* Sidebar / panel hairline glow. */
+[data-slot="sidebar"], [data-component="sidebar"], nav[aria-label] {
+  box-shadow: inset -1px 0 0 var(--oc-upgrade-hair);
+}
+
+/* Scrollbars: leave Chromium's ::-webkit-scrollbar styling alone (setting
+ * scrollbar-color on * makes Chromium drop the custom thumb entirely). */
+
+/* The whole app breathes a little slower for reduced-motion users. */
+@media (prefers-reduced-motion: reduce) {
+  body::after, .ac-beam, .ac-orbs i, .ac-grid,
+  form[data-component="composer"], .oc-toolbar-brand b,
+  [data-slot="message"], [data-component="message"], .message-row {
+    animation: none !important;
+  }
+}
+
+/* ======================================================================
+ * Review pass: make the ambient actually paint, cut the expensive paints,
+ * honour the in-app motion toggle, and tidy the phone chrome.
+ * ====================================================================== */
+
+/* The ambient sat behind an opaque #root, so none of it was visible. */
+html {
+  background-color: var(--kit-bg-base);
+}
+body,
+#root {
+  background: transparent !important;
+}
+#root {
+  position: relative;
+  z-index: 1;
+}
+body::before,
+body::after {
+  z-index: 0;
+}
+.olliE-ambient {
+  z-index: 0;
+  isolation: isolate;
+}
+.olliE-ambient .ac-orbs,
+.olliE-ambient .ac-beam,
+.olliE-ambient .ac-grid {
+  z-index: 0;
+}
+/* The base motion layer runs on every theme, not only the animated kits. */
+html:not([data-oc-motion]) .olliE-ambient {
+  visibility: visible;
+}
+
+/* Composer: drop the per-frame box-shadow animation (repaint), keep a clean
+ * static glow and let focus win. */
+form[data-component="composer"] {
+  animation: none;
+  position: relative;
+}
+form[data-component="composer"]:focus-within {
+  animation: none;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--kit-accent) 48%, transparent),
+    0 20px 62px -26px var(--oc-upgrade-glow),
+    0 0 44px -10px var(--oc-upgrade-glow);
+}
+
+/* Grid: move a child with transform instead of repainting background-position. */
+.ac-grid {
+  animation: none;
+}
+.ac-grid::after {
+  content: "";
+  position: absolute;
+  inset: -44px;
+  background: inherit;
+  background-size: 44px 44px;
+  pointer-events: none;
+  animation: ac-grid-move 18s linear infinite;
+}
+@keyframes ac-grid-move {
+  to {
+    transform: translate3d(44px, 44px, 0);
+  }
+}
+
+/* Promote the orbs only when motion is actually allowed. */
+.ac-orbs i {
+  will-change: auto;
+}
+html:not([data-oc-reduced-motion]) .ac-orbs i {
+  will-change: transform;
+}
+
+/* Coarse pointers: cheaper blurs, same look. */
+@media (hover: none) and (pointer: coarse) {
+  body::before {
+    filter: none;
+    opacity: 0.62;
+  }
+  body::after {
+    opacity: 0.4;
+  }
+  .ac-orbs i {
+    filter: blur(18px);
+    opacity: 0.42;
+  }
+  .ac-beam {
+    filter: blur(10px);
+    opacity: 0.32;
+  }
+}
+
+/* Honour the in-app reduce-motion setting and the OS setting. */
+html[data-motion="reduce"] body::before,
+html[data-motion="reduce"] body::after,
+html[data-motion="reduce"] .ac-beam,
+html[data-motion="reduce"] .ac-orbs i,
+html[data-motion="reduce"] .ac-grid::after,
+html[data-motion="reduce"] .oc-toolbar-brand b,
+html[data-oc-reduced-motion] body::before,
+html[data-oc-reduced-motion] body::after,
+html[data-oc-reduced-motion] .ac-beam,
+html[data-oc-reduced-motion] .ac-orbs i,
+html[data-oc-reduced-motion] .ac-grid::after,
+html[data-oc-reduced-motion] .oc-toolbar-brand b {
+  animation: none !important;
+}
+
+/* Message entrance (only when motion is welcome). */
+@media (prefers-reduced-motion: no-preference) {
+  [data-component="user-message"],
+  [data-component="assistant-message"] {
+    animation: ac-rise 260ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+}
+
+/* Attachment tap feedback. */
+[data-component="attachment-card"]:active {
+  transform: scale(0.98);
+}
+
+/* Phone chrome: 96px of pills is too much. Keep the essentials, drop the rest. */
+@media (max-width: 520px) {
+  :root {
+    --oc-toolbar-height: 56px;
+  }
+  .oc-toolbar [data-slot="olliecode-website-pill"],
+  .oc-toolbar [data-slot="olliecode-license-pill"],
+  .oc-toolbar [data-slot="olliecode-reset-pill"] {
+    display: none;
+  }
+  .oc-toolbar button {
+    min-height: 40px;
+    font-size: 12px;
+  }
+}

@@ -6,7 +6,7 @@ import path from "node:path"
 import tls from "node:tls"
 import { app } from "electron"
 
-// olliEcode licensing engine — Node-native port of overlay/packages/cli/src/
+// AvciCode licensing engine — Node-native port of overlay/packages/cli/src/
 // services/licensing.ts. Runs in the Electron main process so the dialog
 // talks straight to this module via IPC instead of shelling out to
 // `opencode-cli license activate <key>` per keystroke. The HWID formula,
@@ -128,7 +128,7 @@ export interface Cached {
   readonly hwid: string
   readonly tier: string
   readonly expires_at: number
-  // olliEcode email-at-activate (optional). Mirror of the CLI's Cached shape.
+  // AvciCode email-at-activate (optional). Mirror of the CLI's Cached shape.
   readonly email?: string
 }
 
@@ -474,7 +474,7 @@ export class LicensingEngine {
     const cached = this.load()
     if (!cached) {
       throw new LicenseError(
-        "olliEcode is not activated on this machine. Enter a key in the dialog or run: olliecode license activate <KEY>",
+        "AvciCode is not activated on this machine. Enter a key in the dialog or run: olliecode license activate <KEY>",
       )
     }
     const hwid = this.hwid()

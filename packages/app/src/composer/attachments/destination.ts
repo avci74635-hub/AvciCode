@@ -27,8 +27,13 @@ export function useAttachmentDestination(controls: Accessor<ComposerControls>) {
     // comma-separated string here; calling .some on the string was the
     // "i.some is not a function" crash when adding an image. Normalize both
     // shapes before deciding whether the model accepts the attachment.
-    const value = controls().model.selection.current()?.capabilities.input as unknown
-    const known = Array.isArray(value) || typeof value === "string" || (!!value && typeof value === "object")
+    const selected = controls().model.selection.current()
+    const value = selected?.capabilities.input as unknown
+    // The local AvciCode proxy exposes the upstream multimodal free models, but
+    // its /v1/models discovery reports text-only. Treat it as image-capable so
+    // the composer inlines images instead of degrading them to file paths.
+    const proxied = selected?.providerID === "opencode-unlimited-proxy"
+    const known = !proxied && (Array.isArray(value) || typeof value === "string" || (!!value && typeof value === "object"))
     const modalities = !value
       ? []
       : Array.isArray(value)
